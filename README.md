@@ -8,7 +8,7 @@ Aim of this project is to create label library and control software for zebra pr
 # we are using poetry for dependency management
 poetry install
 
-# run once to create secrets
+# run once to create initial .env
 source env.sh
 
 # run once to create database
