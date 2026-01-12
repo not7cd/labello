@@ -19,7 +19,7 @@ from labello.database import db, Label
 from labello.templating.loader import jinja_env as label_tpl, get_variables
 from labello.templating import epl
 from labello.rendering.epl import Renderer
-from labello.printer import get_status, send_raw as send_raw_to_printer
+from labello.printer import printer
 from labello.api import api
 
 logging.basicConfig(level=logging.INFO)
@@ -36,7 +36,7 @@ common_vars_tpl = {"app": app.config.get_namespace("APP_")}
 def before_request():
     app.logger.debug("connecting to db")
     db.connect()
-    common_vars_tpl["printer_status"] = get_status(settings.printer_name)
+    common_vars_tpl["printer_status"] = printer.get_status()
 
 
 @app.teardown_appcontext
@@ -61,9 +61,9 @@ def label_editor(label_id=None):
         name = request.values.get("label_name")
 
         if request.values.get("print"):
-            res = send_raw_to_printer(data, settings.printer_name)
+            res = printer.send_raw(data)
             flash(
-                f"sent {len(data)} bytes to printer {settings.printer_name}",
+                f"sent {len(data)} bytes to printer",
                 "success" if res == 0 else "error",
             )
         elif request.values.get("save"):
@@ -134,9 +134,9 @@ def print_template(label_id):
 
     if request.method == "POST" and request.values.get("print"):
         data = rendered
-        res = send_raw_to_printer(data, settings.printer_name)
+        res = printer.send_raw(data)
         flash(
-            f"sent {len(data)} bytes to printer {settings.printer_name}",
+            f"sent {len(data)} bytes to printer",
             "success" if res == 0 else "error",
         )
     return render_template(
@@ -153,9 +153,9 @@ def send_raw():
     """Send raw text to printer"""
     if request.method == "POST" and request.values.get("raw"):
         data = request.values.get("raw")
-        res = send_raw_to_printer(data, settings.printer_name)
+        res = printer.send_raw(data)
         flash(
-            f"sent {len(data)} bytes to printer {settings.printer_name}",
+            f"sent {len(data)} bytes to printer",
             "success" if res == 0 else "error",
         )
 
