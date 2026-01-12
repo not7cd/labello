@@ -13,6 +13,8 @@ APP_IMAGES_PATH = os.environ.get("LABELLO_IMAGES_PATH", "./images/")
 
 printer_name = os.environ.get("LABELLO_PRINTER_NAME", "Zebra_LP2824")
 printer_host = os.environ.get("LABELLO_PRINTER_HOST", "localhost:631")
+printer_device = os.environ.get("LABELLO_PRINTER_DEVICE")
+printer_type = os.environ.get("LABELLO_PRINTER_TYPE")
 
 labels = {"protected": [1, 2, 3, 4, 5, 6, 7, 8, 9]}
 
