@@ -11,6 +11,16 @@ class Printer:
     def get_status(self) -> str:
         raise NotImplementedError()
 
+    def get_state(self) -> str:
+        status = self.get_status().lower()
+        if "error" in status or "not found" in status or "failed" in status:
+            return "error"
+        if "printing" in status:
+            return "printing"
+        if "idle" in status or "exists" in status or "ready" in status:
+            return "idle"
+        return "error"
+
     def send_raw(self, data: str) -> int:
         raise NotImplementedError()
 

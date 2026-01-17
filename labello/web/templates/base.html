@@ -25,6 +25,29 @@
             flex-direction: column;
             min-height: 100vh;
         }
+        .status-dot {
+            height: 12px;
+            width: 12px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+        .status-dot.idle {
+            background-color: #28a745;
+        }
+        .status-dot.printing {
+            background-color: #ffc107;
+        }
+        .status-dot.error {
+            background-color: #dc3545;
+        }
+        .printer-status-container {
+            display: flex;
+            align-items: center;
+            padding: .5rem 1rem;
+        }
     </style>
 </head>
 <body>
@@ -34,7 +57,9 @@
             <a class="navbar-brand" href="/">{{ app.title }}</a>
             <a class="nav-link btn btn-outline-primary" href="/editor/new">create</a>
             <a class="nav-link" href="/send_raw">send raw</a>
-            <a class="nav-link disabled" href="#">{{ printer_status }}</a>
+            <div class="printer-status-container ml-auto" title="{{ printer_status }}">
+                <span class="status-dot {{ printer_state }}"></span>
+            </div>
         </nav>
     {% endblock %}
 

@@ -37,6 +37,7 @@ def before_request():
     app.logger.debug("connecting to db")
     db.connect()
     common_vars_tpl["printer_status"] = printer.get_status()
+    common_vars_tpl["printer_state"] = printer.get_state()
 
 
 @app.teardown_appcontext
