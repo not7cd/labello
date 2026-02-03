@@ -15,7 +15,8 @@
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
             python310
-            poetry
+            uv
+            just
             openssl
             
             # Dependencies for Pillow and other Python libs
