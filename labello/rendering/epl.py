@@ -139,6 +139,26 @@ class LabelEPL:
             handler(line)
         return False
 
+    
+class Object:
+    def __init__(self, line):
+        parts = line.split(',')
+        if parts[0][0].isalpha():
+            self.type = parts[0][0]
+            self.values = [int(parts[0][1:])] + [int(part) if part.isnumeric() else part for part in parts[1:]]
+        else:
+            self.type = parts[0][:2]
+            self.values = [int(part) if part.isnumeric() else part for part in parts[1:]]
+    
+    def __str__(self):
+        return f'Type: {self.type}\nValues: {self.values}'
+
+objects = []
+with open('file.txt', 'r') as f:
+    for line in f:
+        objects.append(Object(line.strip()))
+
+print(objects)
 
 def parse(raw) -> List[LabelEPL]:
     """
